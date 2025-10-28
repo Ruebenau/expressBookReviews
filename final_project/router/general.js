@@ -6,31 +6,18 @@ const public_users = express.Router();
 
 
 public_users.post("/register", (req,res) => {
-  //Write your code here
-  username = req.body.username;
-  password = req.body.password;
+    //Write your code here
+    username = req.body.username;
+    password = req.body.password;
 
-  if(username === "" || username === null)
-  {
-    res.send("Must provide username");
-    return;
-  }
+    if(!username || !password)
+    return /*error*/;
 
-  if(password === "" || password === null)
-  {
-    res.send("Must provide password");
-    return;
-  }
-
-
-  for(var usI in users)
-    if(users[usI].username == username)
-    {
-        res.send("User already exists");
-        return;
-    }
-
-  users.push(req.body);
+    var userwithusername = users.filter((user) => user.username === username);
+    if(userwithusername.length > 0)
+        return /*error*/;
+    
+    users.push(req.body);
 });
 
 // Get the book list available in the shop

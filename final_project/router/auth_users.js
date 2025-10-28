@@ -16,7 +16,25 @@ const authenticatedUser = (username,password)=>{ //returns boolean
 //only registered users can login
 regd_users.post("/login", (req,res) => {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+    var username = req.body.username;
+    var password = req.body.password;
+
+    if(!username || !password)
+        return /*error*/;
+
+    var valUsers = users.filter((user) => {
+        return (user.username === username && user.password === password);
+    });
+
+    if(valUsers.length === 0)
+        return /*error*/;
+
+    var accessToken = jwt.sign({data: password}, 'access', {expiresIn: 60*60});
+
+    req.session.authorization = {
+        accessToken,
+        username
+    };
 });
 
 // Add a book review
