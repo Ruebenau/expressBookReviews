@@ -11,13 +11,14 @@ public_users.post("/register", (req,res) => {
     password = req.body.password;
 
     if(!username || !password)
-    return /*error*/;
+        return res.status(404).json({message: "Unable to register user."});
 
     var userwithusername = users.filter((user) => user.username === username);
     if(userwithusername.length > 0)
-        return /*error*/;
+        return res.status(404).json({message: "User already exists!"});
     
     users.push(req.body);
+    return res.status(200).json({message: "User successfully registered. Now you can login"});
 });
 
 // Get the book list available in the shop

@@ -20,14 +20,14 @@ regd_users.post("/login", (req,res) => {
     var password = req.body.password;
 
     if(!username || !password)
-        return /*error*/;
+        return res.status(404).json({ message: "Error logging in" });
 
     var valUsers = users.filter((user) => {
         return (user.username === username && user.password === password);
     });
 
     if(valUsers.length === 0)
-        return /*error*/;
+        return res.status(208).json({ message: "Invalid Login. Check username and password" });
 
     var accessToken = jwt.sign({data: password}, 'access', {expiresIn: 60*60});
 
@@ -35,6 +35,8 @@ regd_users.post("/login", (req,res) => {
         accessToken,
         username
     };
+
+    return res.status(200).send("User successfully logged in");
 });
 
 // Add a book review
