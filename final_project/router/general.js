@@ -7,8 +7,8 @@ const public_users = express.Router();
 
 public_users.post("/register", (req,res) => {
     //Write your code here
-    username = req.body.username;
-    password = req.body.password;
+    var username = req.body.username;
+    var password = req.body.password;
 
     if(!username || !password)
         return res.status(404).json({message: "Unable to register user."});
