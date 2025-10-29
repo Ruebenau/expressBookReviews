@@ -42,13 +42,19 @@ regd_users.post("/login", (req,res) => {
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
     //Write your code here
-    console.log("arrived at review endpoint");
     var reviews = books[req.params.isbn].reviews;
     var review = req.body.review;
 
     reviews[req.session.authorization.username] = review;
 
     return res.status(200).send("Successfully posted review.");
+});
+
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+    var reviews = books[req.params.isbn].reviews;
+    delete reviews[req.session.authorization.username];
+
+    return res.status(200).send("Successfully deleted review."); 
 });
 
 module.exports.authenticated = regd_users;

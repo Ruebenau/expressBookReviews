@@ -21,13 +21,13 @@ public_users.post("/register", (req,res) => {
     return res.status(200).json({message: "User successfully registered. Now you can login"});
 });
 
-/*// Get the book list available in the shop
+// Get the book list available in the shop
 public_users.get('/',function (req, res) {
   //Write your code here
   res.send(JSON.stringify(books));
-});*/
+});
 
-public_users.get('/', function (req, res) {
+public_users.get('/async', function (req, res) {
    var promise = new Promise((resolve,reject) => {
         setTimeout(() => {
         resolve(JSON.stringify(books));
@@ -40,12 +40,12 @@ public_users.get('/', function (req, res) {
     
 
 // Get book details based on ISBN
-/*public_users.get('/isbn/:isbn',function (req, res) {
+public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
   res.send(JSON.stringify(books[req.params.isbn]));
- });*/
+ });
 
- public_users.get('/isbn/:isbn', function (req, res) {
+ public_users.get('/isbn-async/:isbn', function (req, res) {
     var promise = new Promise((resolve,reject) => {
         setTimeout(() => {
         resolve(JSON.stringify(books[req.params.isbn]));
@@ -56,7 +56,7 @@ public_users.get('/', function (req, res) {
     });
  });
   
-/*// Get book details based on author
+// Get book details based on author
 public_users.get('/author/:author',function (req, res) {
   //Write your code here
   var author = req.params.author;
@@ -67,9 +67,9 @@ public_users.get('/author/:author',function (req, res) {
             books_by_author.push(books[book]);
 
     res.send(JSON.stringify(books_by_author));
-});*/
+});
 
-public_users.get('/author/:author', function (req, res) {
+public_users.get('/author-async/:author', function (req, res) {
     var promise = new Promise((resolve,reject) => {
         var author = req.params.author;
         var books_by_author = [];
@@ -87,7 +87,7 @@ public_users.get('/author/:author', function (req, res) {
     });
 });
 
-/*// Get all books based on title
+// Get all books based on title
 public_users.get('/title/:title',function (req, res) {
   //Write your code here
    //Write your code here
@@ -99,9 +99,9 @@ public_users.get('/title/:title',function (req, res) {
          books_by_title.push(books[book]);
  
      res.send(JSON.stringify(books_by_title));
-});*/
+});
 
-public_users.get('/title/:title',function (req, res) {
+public_users.get('/title-async/:title',function (req, res) {
     var promise = new Promise((resolve,reject) => {
         var title = req.params.title;
         var books_by_title = [];
@@ -122,7 +122,7 @@ public_users.get('/title/:title',function (req, res) {
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
   //Write your code here
-  res.send(JSON.stringify(books[req.params.isbn].review));
+  res.send(JSON.stringify(books[req.params.isbn].reviews));
 });
 
 module.exports.general = public_users;
